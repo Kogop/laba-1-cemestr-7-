@@ -38,9 +38,57 @@ double dPm() {
 	return Lambda() * (L1 / dv1) * ((roR * pow(Vsr(), 2)) / 2) / 100000;
 
 }
+
+double VsrN() {
+
+
+
+	return 4 * Q / (pi * (D * D - dn1 * dn1));
+
+
+}
+double SenMN() {
+	return t0 * (D * D - dn1 * dn1) / (nu * VsrN());
+
+}
+double RemN() {
+	return roR * VsrN() * (D - dn1) / (nu * (1 + (1 / 8.0) * SenMN()));
+
+
+}
+
+double LambdaN() {
+
+	if (Rem() < 1600)
+	{
+		return 96 / RemN();
+
+	}
+	else
+	{
+		return 0.316 / pow(RemN(), 0.25);
+	}
+
+}
+double dPmN() {
+
+	return LambdaN() * (L1 / (D - dn1)) * ((roR * pow(VsrN(), 2)) / 2) / 100000;
+
+}
+double DP() {
+
+	return dPm() + dPmN();
+	
+}
+
+double N() {
+
+	return DP() * Q / nu;
+}
+
 int main() {
 
-
+	cout << N();
 
 	return 1;
 }
